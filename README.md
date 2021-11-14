@@ -1,1 +1,1 @@
-# 100-Challenges
+# 100 Javascript project Challenges
