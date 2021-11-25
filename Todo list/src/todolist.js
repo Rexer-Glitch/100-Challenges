@@ -20,6 +20,7 @@ const addTodoInputs = document.querySelector(".addTodoInputs");
 
 class Todolist {
   #todos;
+
   #TODAY;
   #FUTURE;
   #CURRENTTL;
@@ -28,7 +29,6 @@ class Todolist {
   }
 
   #init() {
-    this.#OLD = "Old";
     this.#TODAY = "Today";
     this.#FUTURE = "Future";
 
