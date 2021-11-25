@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container dark">
+      <div class="menu--theme-btnContainer">
+        <div class="menuBtn">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+        <div class="theme-toggler">
+          <img src="img/theme-light-dark.png" alt="theme changer" />
+        </div>
+      </div>
+
+      <aside class="hideSidebar">
+        <section class="statsContainer">
+          <h1>TASKS</h1>
+
+          <div class="progressbarContainer">
+            <div class="progressbar"></div>
+          </div>
+
+          <div class="statsContainer">
+            <div class="stats">Completed Tasks <span></span></div>
+            <div class="stats">Yet To Complete <span></span></div>
+          </div>
+        </section>
+
+        <section class="timeSelectorContainer">
+          <button class="sideBtn active">Today</button>
+          <button class="sideBtn">Future</button>
+          <button class="sideBtn">Old</button>
+        </section>
+      </aside>
+
+      <main>
+        <div class="todolistContainer">
+          <h1 class="todolistTitle"></h1>
+
+          <div class="todoItemContainer"></div>
+
+          <button class="todolistBtn">+</button>
+        </div>
+      </main>
+
+      <div class="addTodoItemContainer">
+        <div class="background"></div>
+
+        <div class="addTodo">
+          <span class="closeWindow"></span>
+          <h1>Add Todo</h1>
+          <div class="addTodoInputs">
+            <div class="">
+              <img src="img/calendar-range.png" alt="calendar icon" />
+              <select required>
+                <option value="" disabled selected hidden>Set Date</option>
+                <option value="0">Today</option>
+                <option value="1">Future</option>
+              </select>
+            </div>
+
+            <div class="">
+              <img src="img/pencil.png" alt="pencil icon" />
+              <input
+                type="text"
+                placeholder="Write Task Name"
+                class="addTodoNameInput"
+              />
+            </div>
+            <button class="addTodoBtn">Past</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="src/index.js" type="module"></script>
+  </body>
+</html>
