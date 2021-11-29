@@ -1,15 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
 
     <title>Sharp Calculator</title>
-</head>
-<body>
-    <h1>Hello there hi</h1>
+  </head>
+  <body>
+    <main class="container">
+      <div class="calculator">
+        <div class="screenContainer">
+          <h1 class="logo">SHARP</h1>
+          <div class="screen"></div>
+          <div class="modelTexts">
+            <div>ADVANCED <span>D.A.L</span></div>
+            <div>EL-531TH</div>
+          </div>
+        </div>
+
+        <div class="operationContainer">
+          <div class="home-on-btns">
+            <button data-sec="" data-ter="" class="home">HOME</button>
+            <div class="btnContainer">
+              <span>OFF</span>
+              <button data-sec="" data-ter="" class="onBtn">ON/C</button>
+            </div>
+          </div>
+
+          <div class="navigatorBtns">
+            <button data-sec="" data-ter="" class="nav-upBtn">&uparrow;</button>
+            <button data-sec="" data-ter="" class="nav-lfBtn">&LeftArrow;</button>
+            <button data-sec="" data-ter="" class="nav-rtBtn">&RightArrow;</button>
+            <button data-sec="" data-ter="" class="nav-downBtn">&DownArrow;</button>
+          </div>
+          <div class="2f-mode-btns">
+            <button data-sec="" data-ter="" class="2fBtn">2nd F</button>
+            <div class="btnContainer">
+              <span>CA</span>
+              <button data-sec="" data-ter="" class="modeBtn">MODE</button>
+            </div>
+          </div>
+          <div class="alpha-setUp-del-btns">
+            <div class="btnContainer">
+              <span>STAT VAR</span>
+              <button data-sec="" data-ter="" class="alphaBtn">ALPHA</button>
+            </div>
+            <button data-sec="" data-ter="" class="setUpBtn">SET UP</button>
+            <div class="btnContainer">
+              <span><span class="secondary">INS</span></span>
+              <button data-sec="INS" data-ter="" class="delBtn">DEL</button>
+            </div>
+          </div>
+
+          <div class="functionOperators">
+            <div>
+                <span>
+                    <span class="secondary">arc hyp</span>
+                    NOT
+                </span>
+                <button data-sec="arcHyp" data-ter="" class="hypBtn">hyp</button>
+            </div>
+            <div>
+                <span>
+                    <span class="secondary">sin<sup>-1</sup></span>
+                    AND
+                </span>
+                <button data-sec="sin^-1" data-ter="" class="sinBtn">sin</button>
+            </div>
+            <div>
+                <span>
+                    <span class="secondary">cos<sup>-1</sup></span>
+                    OR
+                </span>
+                <button data-sec="cos^-1" data-ter="" class="cosBtn">cos</button>
+            </div>
+            <div>
+                <span>
+                    <span class="secondary">tan<sup>-1</sup></span>
+                    XOR
+                </span>
+                <button data-sec="tan^-1" data-ter="" class="tanBtn">tan</button>
+            </div>
+
+            <div>
+                <span>
+                    <span class="secondary">DRG &rightarrow;</span>
+                    XNOR
+                </span>
+                <button data-sec="drg" data-ter="" class="piBtn">&pi;</button>
+            </div>
+
+            <div>
+                <span></span>
+                <button data-sec="" data-ter="" class="drgBtn">DRG</button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span class="secondary"><sup>x</sup>&Sqrt;</span>
+                        <span class="tertiary">A</span>
+                    </div>
+                </span>
+                <button data-sec="xroot" data-ter="A" class="expBtn"><i>Y<sup>x</sup></i></button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span></span>
+                        <span class="tertiary">B</span>
+                    </div>
+                </span>
+                <button data-sec="" data-ter="B" class="sqrtBtn">&Sqrt;</button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span class="secondary">x<sup>-1</sup></span>
+                        <span class="tertiary">C</span>
+                    </div>
+                </span>
+                <button data-sec="x^-1" data-ter="C" class="sqrBtn">x<sup>2</sup></button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span class="secondary"><sup>3</sup>&Sqrt;</span>
+                        <span class="tertiary">D</span>
+                    </div>
+                </span>
+                <button data-sec="cuberoot" data-ter="D" class="cubeBtn">x<sup>3</sup></button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span class="secondary">10<sup>x</sup></span>
+                        <span class="tertiary">E</span>
+                    </div>
+                </span>
+                <button data-sec="10^x" data-ter="E" class="logBtn">log</button>
+            </div>
+
+            <div>
+                <span>
+                    <div>
+                        <span class="secondary">e<sup>x</sup></span>
+                        <span class="tertiary">F</span>
+                    </div>
+                </span>
+                <button data-sec="e^x" data-ter="F" class="lnBtn">ln</button>
+            </div>
+
+
+            <div>
+                <span class="secondary">&leftarrow;,&rightarrow;</span>
+                <button data-sec="" data-ter="" class="exp2Btn"><b>E</b>xp</button>
+            </div>
+
+
+            <div>
+                <span class="secondary">d/c</span>
+                <button data-sec="d/c" data-ter="" class="fracBtn"><b>a</b><sup>b</sup>/<sub>c</sub></button>
+            </div>
+
+
+            <div>
+                <span class="secondary">&rightarrow;&leftarrow;DEG</span>
+                <button data-sec="deg" data-ter="" class="dmsBtn">D'M'S</button>
+            </div>
+
+            <div>
+                <span class="tertiary r-shift">X</span>
+                <button data-sec="X" data-ter="" class="tertiary rclBtn">RCL</button>
+            </div>
+
+            <div>
+                <span class="tertiary r-shift">Y</span>
+                <button data-sec="Y" data-ter="" class="tertiary stoBtn">STO</button>
+            </div>
+
+            <div>
+                <span class="">
+                    <div>
+                        <span class="secondary">M-</span>
+                        <span class="tertiary">M</span>
+                    </div>
+                </span>
+                <button data-sec="M-" data-ter="M" class="tertiary M+Btn">M+</button>
+            </div>
+          </div>
+
+          <div class="numbers-operators-btns">
+              <div class="numbers">
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">RANDOM</span>
+                            <span class="tertiary"><i>&#562;</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="RANDOM" data-ter="&#562;" class="number">7</button>
+                </div>
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">&rightarrow;r&theta;</span>
+                            <span class="tertiary"><i>sY</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="&rightarrow;r&theta;" data-ter="sy" class="number">8</button>
+                </div>
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">&rightarrow;xY</span>
+                            <span class="tertiary"><i>&alpha;Y</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="&rightarrow;xy" data-ter="&alpha;y" class="number">9</button>
+                </div>
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">n!</span>
+                            <span class="tertiary"></span>
+                        </div>
+                    </span>
+                    <button data-sec="!" data-ter=""  class="number">4</button>
+                </div>
+
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">nCr</span>
+                            <span class="tertiary">sx</span>
+                        </div>
+                    </span>
+                    <button data-sec="nCr" data-ter="sx" class="number">5</button>
+                </div>
+
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">n<b>P</b>r</span>
+                            <span class="tertiary"><i>&alpha;x</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="nPr" data-ter="&alpha;x" class="number">6</button>
+                </div>
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">%</span>
+                            <span class="tertiary"><i>&sum;xY</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="%" data-ter="&sum;xy" class="number">1</button>
+                </div>
+    
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary"></span>
+                            <span class="tertiary"><i>&sum;y</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="" data-ter="&sum;y" class="number">2</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary"></span>
+                            <span class="tertiary"><i>&sum;y<sub>2</sub></i></span>
+                        </div>
+                    </span>
+                    <button data-sec="" data-ter="&sum;y^2" class="number">3</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">MDF</span>
+                            <span class="tertiary">n</span>
+                        </div>
+                    </span>
+                    <button data-sec="MDF" data-ter="n" class="number">0</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary"></span>
+                            <span class="tertiary"><i>&sum;x</i></span>
+                        </div>
+                    </span>
+                    <button data-sec="" data-ter="&sum;x" class="number pointBtn">&CenterDot;</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">M-CLR</span>
+                            <span class="tertiary"><i>&sum;x<sup>2</sup></i></span>
+                        </div>
+                    </span>
+                    <button data-sec="M-CLR" data-ter="&sum;x^2" class="number">&PlusMinus;</button>
+                </div>
+              </div>
+           
+              <div class="operators">
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">x'</span>
+                            <span class="tertiary">a</span>
+                        </div>
+                    </span>
+                    <button data-sec="x'" data-ter="a" class="operator">(</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">y'</span>
+                            <span class="tertiary">b</span>
+                        </div>
+                    </span>
+                    <button data-sec="y'" data-ter="b" class="operator rBracketBtn">)</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary fill">&rightarrow;HEX</span>
+                            <span class="tertiary">c</span>
+                        </div>
+                    </span>
+                    <button data-sec="HEX" data-ter="c" class="operator timesBtn">&times;</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary fill">&rightarrow;BIN</span>
+                            <span class="tertiary"><i>r</span>
+                        </div>
+                    </span>
+                    <button data-sec="BIN" data-ter="r" class="operator divideBtn">&divide;</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">&rightarrow;PEN</span>
+                            <span class="tertiary"></span>
+                        </div>
+                    </span>
+                    <button data-sec="PEN" data-ter="" class="operator plusBtn">+</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">&rightarrow;OCT</span>
+                            <span class="tertiary"></span>
+                        </div>
+                    </span>
+                    <button data-sec="OCT" data-ter="" class="operator minusBtn">&minus;</button>
+                </div>
+
+                <div>
+                    <span>
+                        <div>
+                            <span class="secondary">&rightarrow;DEC</span>
+                            <span class="tertiary">ANS</span>
+                        </div>
+                    </span>
+                    <button data-sec="DEC" data-ter="ANS" class="operator equalBtn">=</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <script src="../dist/index.bundle.js"></script>
-</body>
+  </body>
 </html>
