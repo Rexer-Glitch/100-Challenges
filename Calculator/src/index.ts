@@ -1,16 +1,4 @@
-type user = {
-    name: string,
-    id: number
-}
+import Calculator from "./calculator";
 
-function addUser(u: user): user{
-    return u; 
-}
+const calculator = new Calculator();
 
-console.log(addUser({
-    name: "Ray",
-    id: 1
-}))
-
-
-export {};

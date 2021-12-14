@@ -14,7 +14,9 @@
         <div class="screenContainer">
           <h1 class="logo">SHARP</h1>
           <div class="screen">
-              sinA + 1/2 + 5
+              <div class="indicators"></div>
+              <div contenteditable="true" class="expressions"></div>
+              <div class="ans"></div>
           </div>
           <div class="modelTexts">
             <div>ADVANCED <span>D.A.L</span></div>
@@ -26,7 +28,7 @@
           <div class="home-on-btns">
             <button data-sec="" data-ter="" class="homeBtn">HOME</button>
             <div class="btnContainer">
-              <span>OFF</span>
+              <span class="secondary">OFF</span>
               <button data-sec="" data-ter="" class="onBtn">ON/C</button>
             </div>
           </div>
@@ -38,7 +40,7 @@
             <button data-sec="" data-ter="" class="nav-downBtn">&DownArrow;</button>
           </div>
           <div class="secf-mode-btns">
-            <button data-sec="" data-ter="" class="2fBtn">2nd F</button>
+            <button data-sec="" data-ter="" class="sec-btn">2nd F</button>
             <div class="btnContainer">
               <span>CA</span>
               <button data-sec="" data-ter="" class="modeBtn">MODE</button>
@@ -69,21 +71,21 @@
                     <span class="secondary">sin<sup>-1</sup></span>
                     AND
                 </span>
-                <button data-sec="sin^-1" data-ter="" class="sinBtn">sin</button>
+                <button data-sec="sin⁻¹" data-ter="" class="sinBtn">sin</button>
             </div>
             <div>
                 <span>
                     <span class="secondary">cos<sup>-1</sup></span>
                     OR
                 </span>
-                <button data-sec="cos^-1" data-ter="" class="cosBtn">cos</button>
+                <button data-sec="cos⁻¹" data-ter="" class="cosBtn">cos</button>
             </div>
             <div>
                 <span>
                     <span class="secondary">tan<sup>-1</sup></span>
                     XOR
                 </span>
-                <button data-sec="tan^-1" data-ter="" class="tanBtn">tan</button>
+                <button data-sec="tan⁻¹" data-ter="" class="tanBtn">tan</button>
             </div>
 
             <div>
@@ -112,7 +114,7 @@
                         <span></span>
                         <span class="tertiary">B</span>
                 </span>
-                <button data-sec="" data-ter="B" class="sqrtBtn">&Sqrt;</button>
+                <button data-sec="" data-ter="B" class="sqrtBtn">√</button>
             </div>
 
             <div>
@@ -167,12 +169,12 @@
 
             <div>
                 <span class="tertiary r-shift">X</span>
-                <button data-sec="X" data-ter="" class="tertiary rclBtn">RCL</button>
+                <button data-sec="" data-ter="X" class="tertiary rclBtn">RCL</button>
             </div>
 
             <div>
                 <span class="tertiary r-shift">Y</span>
-                <button data-sec="Y" data-ter="" class="tertiary stoBtn">STO</button>
+                <button data-sec="" data-ter="Y" class="tertiary stoBtn">STO</button>
             </div>
 
             <div>
