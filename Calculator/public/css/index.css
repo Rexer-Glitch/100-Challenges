@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Pocket Calculator';
+    src: url('../font/PocketCalculator.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 :root {
     --primary: rgb(202, 202, 202);
     --secondary: rgb(189, 124, 27);
@@ -63,6 +72,7 @@
     background-color: #F1FFCC;
     
     color: rgb(54, 54, 54);
+    
 
 }
 
@@ -73,8 +83,8 @@
     width: 100%;
     height: 100%;
 
-    background-color: rgba(255,255,255, 0.3);
-    backdrop-filter: blur(10px) saturate(100%) contrast(45%) brightness(130%);
+    background-color: rgba(255,255,255, 0.1);
+    backdrop-filter: blur(0.1px) saturate(100%) contrast(45%) brightness(130%);
 
 } 
 
