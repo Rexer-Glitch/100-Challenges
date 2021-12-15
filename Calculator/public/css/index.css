@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'Pocket Calculator';
-    src: url('../font/p.TTF');
-}
-
 :root {
     --primary: rgb(202, 202, 202);
     --secondary: rgb(189, 124, 27);
