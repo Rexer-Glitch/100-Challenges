@@ -76,7 +76,7 @@ class Calculator {
     });
   }
 
-  processBtnData(data: string): void {
+  processBtnData(data: string){
     switch (data) {
       case "=": {
         //dont calculate with => present on the screen
@@ -99,10 +99,13 @@ class Calculator {
             Y: this.Y,
             ANS: this.ANS,
           };
-          const ans = calculate(expr, scope);
+
+         const ans = calculate(expr, scope);
           this.ANS = ans;
           this.screen.writeToScreenANS(ans);
           this.screen.screenWriter.innerHTML = "";
+        
+          
         } catch (e) {
           this.screen.writeToScreenANS("error");
           console.log(e);
