@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "webpack-dev-server --output-public-path=/dist/"
+    "start": "webpack-dev-server --output-public-path=/public/js/"
   },
   "keywords": [],
   "author": "",
