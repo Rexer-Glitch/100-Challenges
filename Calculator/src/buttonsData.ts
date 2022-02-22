@@ -16,7 +16,7 @@ const numbers = ():btnData[]=> {
 }
 
 const variables = ():btnData[]=> {
-    const vars:string[] = ["A","B","C","D","E","F","X","Y","M"];
+    const vars:string[] = ["A","B","C","D","E","F","X","Y","M", 'a','b','r','n','c'];
     const varList:btnData[] = [];
 
     vars.forEach(v => {
@@ -147,6 +147,26 @@ const data:btnData[] = [
     {
         name: "STO",
         func: "STO"
+    },
+    {
+        name: "2nd F",
+        func: "2nd F"
+    },  {
+        name: "ALPHA",
+        func: "alpha"
+    },
+    {
+        name: "x<sup>3</sup>",
+        func: "^(3)"
+    },{
+        name: "off",
+        func: "off"
+    },{
+        name: "ON/C",
+        func: "on"
+    },{
+        name: "RCL",
+        func: "RCL"
     }
 
 ];

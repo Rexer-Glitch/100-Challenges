@@ -1,246 +1,266 @@
-import Screen from "./screen";
-import { buttons, onBtn, secFBtn, alphaBtn } from "./assets";
-import { HandleClickButtons } from "./screen.helper";
+import buttonData from "./buttonsData";
+import { buttons, screen, screenAnswer, screenIndicators } from "./assets";
+import { deleteExpression, isInFunction} from "./screen.helper";
 import { calculate } from "./util";
 
 class Calculator {
-  A: number;
-  B: number;
-  C: number;
-  D: number;
-  E: number;
-  F: number;
-  X: number;
-  Y: number;
-  ANS: number;
-  history: string[];
-  ON: boolean;
-  SecF: boolean;
-  Alpha: boolean;
-  STO: boolean;
-  screen: Screen;
-  isRad: boolean;
+  private isSec = false;
+  private isAlpha = false;
+  private isDeg = true;
+  private isSTO = false;
+  private isOn = false;
+  private isRCL = false;
+  private ANS = null;
+  private A = 0;
+  private B = 0;
+  private C = 0;
+  private D = 0;
+  private E = 0;
+  private F = 0;
+  private X = 0;
+  private Y = 0;
+  private a = 0;
+  private b = 0;
+  private c = 0;
+  private r = 0;
 
   constructor() {
-    this.reset();
-    this.init();
+    this.handleClicks();
+    this.turnOFF();
   }
-
-  init() {
+  handleClicks() {
+    /*
+     Setup a delegate event handler, catching all button clicks and grabs button data for further process
+    */
     buttons.addEventListener("click", (e) => {
-      if (!this.ON) return;
-      HandleClickButtons(e, this.SecF, this.Alpha)
-        .then((data) => {
-          this.processBtnData(data);
-        })
-        .finally(() => {
-          //focus screen;
-          this.screen.screenWriter.focus();
+      const target = e.target as HTMLElement;
+      const { sec, ter } = target.dataset;
 
-          //turn of second function or alpha on button click
-          const target = e.target as HTMLButtonElement;
-          if (
-            target.classList.contains("sec-btn") ||
-            target.classList.contains("alphaBtn") ||
-            target.classList.contains("stoBtn")
-          )
-            return;
-          this.SecF = false;
-          this.Alpha = false;
-          this.STO = false;
-          this.setScreenIndicators();
-        });
-    });
-
-    onBtn.addEventListener("click", () => {
-      if (this.ON && this.SecF) {
-        this.toggleOn();
+      const data = buttonData.find((d) => {
+        if (!this.isSec && !this.isAlpha) return d.name === target.innerHTML;
+        if (this.isSec) return d.name === sec;
+        if (this.isAlpha) return d.name === ter;
+      });
+      if (data) {
+        this.#processButtonClicks(data.func);
         return;
       }
 
-      if (this.ON && this.SecF === false) {
+      this.setIndicators({ isSec: false, isAlpha: false,isSTO: this.isSTO, isDeg: this.isDeg });
+      this.isRCL = false;
+    });
+  }
+
+  #processButtonClicks(func: string): void {
+    /*
+      Processes data from clicked button
+        -assigns function based on the data provided by the clicked button
+     */
+
+    this.setIndicators({ isSec: false, isAlpha: false,isSTO: this.isSTO, isDeg: this.isDeg });
+
+    if (func === "on") {
+      if (this.isOn) {
         this.clearScreen();
         return;
       }
+      this.turnON();
+      return;
+    } else if (func === "off") {
+      this.turnOFF();
+      return;
+    }
 
-      this.setScreenIndicators();
-      this.toggleOn();
-    });
+    if (!this.isOn) return;
 
-    secFBtn.addEventListener("click", () => {
-      if (this.ON) this.toggleSecF();
-    });
-
-    alphaBtn.addEventListener("click", () => {
-      if (this.ON) this.toggleAlpha();
-    });
-  }
-
-  processBtnData(data: string){
-    switch (data) {
-      case "=": {
-        //dont calculate with => present on the screen
-        if (
-          this.screen.screenWriter.textContent.includes("=>") ||
-          this.screen.screenWriter.textContent.trim() === ""
-        )
-          return;
-
-        const expr = this.screen.screenWriter.textContent;
-        try {
-          const scope = {
-            A: this.A,
-            B: this.B,
-            C: this.C,
-            D: this.D,
-            E: this.E,
-            F: this.F,
-            X: this.X,
-            Y: this.Y,
-            ANS: this.ANS,
-          };
-
-         const ans = calculate(expr, scope);
-          this.ANS = ans;
-          this.screen.writeToScreenANS(ans);
-          this.screen.screenWriter.innerHTML = "";
-        
-          
-        } catch (e) {
-          this.screen.writeToScreenANS("error");
-          console.log(e);
-        }
-        break;
-      }
+    switch (func) {
       case "←": {
-        this.screen.navigate(-1);
+        if(this.isOnVariableMode()){
+          this.clearScreen();
+          break;
+        }
+
+
+        screen.moveCaretPosition(-1);
         break;
       }
       case "→": {
-        this.screen.navigate(1);
+        if(this.isOnVariableMode()){
+          this.clearScreen();
+          break;
+        }
+
+
+        screen.moveCaretPosition(1);
         break;
       }
-      case "del": {
-        this.screen.del();
-        break;
-      }
-      case "STO": {
-        this.toggleSTO();
-        break;
-      }
-      default: {
-        const variablesProcessed = this.processVariableData(data);
-        if (!variablesProcessed) {
-          this.screen.addToScreen(data);
+      case "=": {
+        if(this.isOnVariableMode()){
+          this.clearScreen();
+          break;
+        }
+
+        try {
+          const answer = Math.fround(this.evaluate());
+          this.ANS = answer;
+          screenAnswer.textContent = String(answer);
+        } catch (e) {
+          screenAnswer.textContent = "Err";
         }
         break;
       }
+      case "2nd F": {
+        this.setIndicators({ isSec: true, isAlpha: false,isSTO: this.isSTO, isDeg: this.isDeg });
+        break;
+      }
+      case "alpha": {
+        this.setIndicators({ isSec: false, isAlpha: true,isSTO: this.isSTO, isDeg: this.isDeg });
+        break;
+      }
+      case "STO": {
+        this.setIndicators({ isSec: this.isSec, isAlpha: this.isSec,isSTO: true, isDeg: this.isDeg });
+        break;
+      }
+      case "RCL": {
+        this.isRCL = true;
+        break;
+      }
+      case "del": {
+        if(this.isOnVariableMode()){
+          this.clearScreen();
+          break;
+        }
+
+
+
+        deleteExpression(screen);
+        break;
+      }
+      default: {
+        if(isInFunction(screen.value, screen.caretPosition - 1)) break;
+
+
+        //if its a variable saving combination, just save and not append
+        if(this.saveVariablesToMemory(func)) break;
+
+        if(this.isOnVariableMode()) this.clearScreen();
+
+        const recallVar = this.recallVariable(func);
+
+        if(recallVar !== false){
+          func = String(recallVar);
+        }
+
+       
+
+        screen.appendToCaret(func);
+        if (func.includes("()")) {
+          screen.moveCaretPosition(-1);
+        }
+        
+        break;
+      }
     }
   }
 
-  reset(): void {
-    this.A = 0;
-    this.B = 0;
-    this.C = 0;
-    this.D = 0;
-    this.E = 0;
-    this.F = 0;
-    this.X = 0;
-    this.Y = 0;
-    this.ANS = 0;
-    this.history = [];
-    this.ON = false;
-    this.SecF = false;
-    this.Alpha = false;
-    this.STO = false;
-    this.isRad = true;
-    this.screen = new Screen();
-  }
-
-  toggleOn(): void {
-    this.ON = !this.ON;
-    //add event................................
-    if (this.ON) {
-      this.screen.turnON();
-      return;
-    }
-    this.screen.clearIndicators();
-    this.reset();
-  }
-
-  clearScreen() {
-    if (this.SecF === false && this.ON) {
-      this.screen.Clear();
-      this.screen.turnON();
-    }
-  }
-
-  toggleSecF(): void {
-    this.SecF = !this.SecF;
-    if (this.SecF) {
-      this.Alpha = false;
-    }
-
-    this.setScreenIndicators();
-  }
-
-  toggleSTO(): void {
-    this.STO = !this.STO;
-
-    this.setScreenIndicators();
-  }
-
-  setScreenIndicators() {
-    this.screen.setIndicators({
-      secf: this.SecF,
-      alpha: this.Alpha,
-      STO: this.STO,
-      rad: this.isRad,
+  evaluate():number{
+   return calculate(screen.value, this.isDeg, {
+      ANS: this.ANS,
+      A: this.A,
+      B: this.B,
+      C: this.C,
+      D: this.D,
+      E: this.E,
+      F: this.F,
+      X: this.X,
+      Y: this.Y,
+      a: this.a,
+      b: this.b,
+      c: this.c,
+      r: this.r,
     });
   }
 
-  processVariableData(data: string): boolean {
-    const vars = ["A", "B", "C", "D", "E", "F", "X", "Y", "M"];
-    const res = vars.find((v) => v === data);
-    if (res) {
-      return this.storeVariable(data);
-    }
+  turnOFF() {
+    this.isOn = false;
+    this.isSec = false;
+    this.isAlpha = false;
 
-    return false;
+    this.clearScreen();
+    screen.isCaretVisible = false;
+
+    screenIndicators.innerHTML = "";
   }
 
-  storeVariable(variableName: string): boolean {
-    const screenValueValid: boolean =
-      this.screen.screenWriter.innerHTML !== "" &&
-      this.screen.screenWriter.innerHTML.split(" ").length === 1;
-    let val: number = 0;
-    if (!this.STO) return false;
+  turnON() {
+    this.isOn = true;
 
-    console.log(
-      this.screen.screenWriter.innerHTML,
-      this.screen.screenAns.innerHTML
-    );
-    if (screenValueValid) {
-      val = calculate(this.screen.screenWriter.innerHTML, {});
-    } else if (this.screen.screenAns.textContent !== "") {
-      val = calculate(this.screen.screenAns.innerHTML, {});
-    } else {
-      return false;
-    }
+    screen.isCaretVisible = true;
+    this.updateScreenIndicators();
+  }
 
-    this[variableName] = val | 0;
-    this.screen.Clear();
-    this.screen.addToScreen(`${val | 0}=>${variableName}`);
+  clearScreen() {
+    screen.value = "";
+    screenAnswer.textContent = "";
+  }
+
+  private updateScreenIndicators() {
+    screenIndicators.innerHTML = "";
+    screenIndicators.innerHTML += this.isSec
+      ? "<span><b>S</b></span>"
+      : "<span></span>";
+    screenIndicators.innerHTML += this.isAlpha
+      ? "<span><b>A</b></span"
+      : "<span></span>";
+      screenIndicators.innerHTML += this.isSTO
+      ? "<span>STO</span"
+      : "<span></span>";
+    screenIndicators.innerHTML += this.isDeg
+      ? "<span>DEG</span"
+      : "<span>RAD</span>";
+  }
+
+  private setIndicators(indicators: {
+    isSec: boolean;
+    isAlpha: boolean;
+    isSTO: boolean
+    isDeg: boolean;
+  }): void {
+    if (!this.isOn) return;
+    const keys = Object.keys(indicators);
+    keys.forEach((key) => {
+      this[key] = indicators[key];
+    });
+
+    this.updateScreenIndicators();
+  }
+
+  saveVariablesToMemory(variable: string):boolean {
+    if(this.isSTO){
+      this.setIndicators({ isSec: this.isSec, isAlpha: this.isAlpha, isSTO: false, isDeg: this.isDeg });
+    }else {return false};
+
+
+    if(!['A','B','C', 'D', 'E', 'F','X','Y', 'a','b','c','r'].includes(variable) && this.isOnVariableMode) return false;
+
+    const data:number = screenAnswer.textContent != "" ? Number(screenAnswer.textContent) : this.evaluate();
+    if(!data || Number.isNaN(data)) return false;
+    this[variable] = data;                              
+              
+    this.clearScreen();
+    screen.value = `${variable} => ${data}`;
     return true;
+  } 
+
+  private isOnVariableMode():boolean{
+    return screen.value.match(/^[ABCDEFXYabcr] => [0-9]+$/) !== null;
   }
 
-  toggleAlpha(): void {
-    this.Alpha = !this.Alpha;
-    if (this.Alpha) {
-      this.SecF = false;
-    }
-
-    this.setScreenIndicators();
+  private recallVariable(variable: string):boolean | number {
+    if(variable.match(/^[ABCDEFXYabcr]$/g) === null) return false; 
+    if(!this.isRCL) return false;
+    this.isRCL = false;
+    return this[variable];
   }
 }
 

@@ -1,4 +1,4 @@
 import Calculator from "./calculator";
 
-const calculator = new Calculator();
+new Calculator();
 

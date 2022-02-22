@@ -1,10 +1,11 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "production",
   entry: "./src/index.ts",
   output: {
-    path: path.resolve(__dirname, "public/js"),
+    path: path.resolve(__dirname, "dist/scripts"),
     filename: "main.bundle.js",
   },
   module: {
@@ -24,7 +25,32 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname,"public/css"), 
+          to: path.join(__dirname,"dist/css")
+        },
+        {
+          from: path.join(__dirname,"public/index.html"), 
+          to: path.join(__dirname,"dist/index.html")
+        },
+        {
+          from: path.join(__dirname,"public/font"), 
+          to: path.join(__dirname,"dist/font")
+        }
+      ]
+    })
+  ],
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname,"dist")
+    },
+    compress: true, 
+    port: 4000,
+  }
 };
